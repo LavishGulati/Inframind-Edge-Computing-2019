@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import *
 from .models import *
@@ -9,23 +9,36 @@ def home(request):
             'message': '',
         })
     elif request.method == 'POST':
-        pass
+        form = BillingStartForm(request.POST)
+        if form.is_valid():
+            contact = form.cleaned_data['Contact']
+            NewUser = User(Contact=contact)
+            if NewUser is not None:
+                return redirect('billing/'+contact)
+            else:
+                return render(request, 'home/home.html', {
+                    'message': 'User not found. Register if new user.'
+                })
+        else:
+            return render(request, 'home/home.html', {
+                'message': 'Fill the contact of the person'
+            })
 
-def billing(request):
+def billing(request, contact):
     if request.method == 'GET':
-        pass
+        return render(request, 'home/billing.html')
     elif request.method == 'POST':
         pass
 
 def register(request):
     if request.method == 'GET':
-        form = register_form()
+        form = RegisterForm()
         return render(request, 'home/register.html', {
             'message': '',
         })
     elif request.method == 'POST':
-        form = register_form(request.POST)
-        if form.is_valid:
+        form = RegisterForm(request.POST)
+        if form.is_valid():
             NewUser = User()
             NewUser.Name = form.cleaned_data['Name']
             NewUser.Address = form.cleaned_data['Address']
