@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Kirana Retail Store: Home{% endblock %}
+
+{% block content %}
+
+<form name="EnterUser" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="Name" placeholder="Enter name of the person"></input>
+    <input type="submit" value="Start billing"></input>
+</form>
+
+<a href="{% url 'home:register' %}">Register a person</a>
+
+{% endblock %}

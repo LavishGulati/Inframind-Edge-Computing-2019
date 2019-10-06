@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Kirana Retail Store: Registration{% endblock %}
+
+{% block content %}
+
+<form name="RegisterUser" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="Name" placeholder="Enter name of the person"></input>
+    <input type="text" name="Address" placeholder="Enter home address"></input>
+    <input type="text" name="Contact" placeholder="Enter contact of the person"></input>
+    <input type="email" name="Email" placeholder="Enter email of the person"></input>
+    <input type="submit" value="Register"></input>
+</form>
+
+{% endblock %}
